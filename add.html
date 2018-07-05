@@ -10,15 +10,18 @@
 	<div>
 		<header id="nav">
 			<nav class="navbar navbar-light bg-light">
-				<a class="navbar-brand">Add</a>
+				<a class="navbar-brand">Ajouter un contact</a>
 				<div>
 					<ul class="navbar-nav mr-auto" id="navigation">
-						<li class="nav-item"><a class="nav-link" href="index.html">Mains</a></li>
-						<li class="nav-item"><a class="nav-link" href="add.html">Add</a></li>
+						<li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+						<li class="nav-item"><a class="nav-link" href="add.html">Ajouter</a></li>
 					</ul>
 				</div>
 			</nav>
 		</header>
+		<div>
+			<button id="retour" class="btn btn-outline-success my-2 my-sm-0">Retour</button>
+		</div>
 		<div>
 			<form id="formAdd">
 				<label>Nom:</label>
@@ -26,8 +29,8 @@
 				<label>Prenom:</label>
 				<input type="text" name="prenom" id="inPrenom">
 				<label>Age:</label>
-				<input type="age" name="age" id="inAge">
-				<button id="submit">Submit</button>
+				<input type="number" name="age" id="inAge" max="100">
+				<button id="submit" class="btn btn-outline-success my-2 my-sm-0">Ajouter</button>
 			</form>
 		</div>
 	</div>

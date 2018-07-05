@@ -34,6 +34,11 @@ $('#submit').click(function (){
 		alert('Nom et prénom obligatoires');
 
 	}else{
+		var dataParse = JSON.parse(window.localStorage.getItem("annuaire"));
+		if (dataParse == null) {
+			var dataParse = [];
+			alert('Premier ajout fait');
+		}
 		dataParse.push({
 			nom : nomSet,
 			prenom : prenomSet,
@@ -65,3 +70,7 @@ $('#butRecherche').click(function(){
 			}
 		}
 	};
+
+	$('#retour').click(function(){
+		location.href="index.html";
+	});
