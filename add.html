@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Ajouter</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+	<div>
+		<header id="nav">
+			<nav class="navbar navbar-light bg-light">
+				<a class="navbar-brand">Annuaire</a>
+				<form id="navigation">
+					<button class="btn btn-outline-success" type="button">Main</button>
+					<button class="btn btn-sm btn-outline-secondary" type="button">Add</button>
+				</form>
+			</nav>
+		</header>
+		<div>
+			<form id="formAdd">
+				<label>Nom:</label>
+				<input type="text" name="nom" id="inNom">
+				<label>Prenom:</label>
+				<input type="text" name="prenom" id="inPrenom">
+				<label>Age:</label>
+				<input type="age" name="age" id="inAge">
+				<button id="submit">Submit</button>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
