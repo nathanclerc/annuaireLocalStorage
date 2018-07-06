@@ -1,29 +1,16 @@
-// var data = [
-// {
-// 	nom: 'Clerc',
-// 	prenom: 'Nathan',
-// 	age: 19
-// },
-// {
-// 	nom: 'Philippe',
-// 	prenom: 'Jonathan',
-// 	age: 19
-// }
-// ];
-
-
-// var val = JSON.stringify(data);
-// window.localStorage.setItem("annuaire", val);
 
 var dataParse = JSON.parse(window.localStorage.getItem("annuaire"));
 for (id in dataParse){
-
 	var personne = dataParse[id];
-	$('#tBody').append('<tr><td class="nom">' + personne.nom + '</td><td class="prenom">' + personne.prenom + '</td><td class="age">' + personne.age + 
-		'</td><td><button class="id btn btn-outline-success my-2 my-sm-0">Modifier</button></td>'+
-		'<td><button class="suppr btn btn-outline-success my-2 my-sm-0">Supprimer</button></td></tr>');
-}
+	if (personne == null) {
 
+	}else{
+		$('#tBody').append('<tr><td class="id">'+id+'</td><td class="nom">' + personne.nom + '</td><td class="prenom">' + personne.prenom + '</td><td class="age">' + personne.age + 
+			'</td><td><button class="modif btn btn-outline-success my-2 my-sm-0">Modifier</button></td>'+
+			'<td><button class="suppr btn btn-outline-success my-2 my-sm-0">Supprimer</button></td></tr>');
+	}
+}
+$('.id').hide();
 $('#submit').click(function (){
 
 	var nomSet = $('#inNom').val();
@@ -64,66 +51,54 @@ function cherche(){
 		$('tbody>tr').show();
 	}
 	$('tbody>tr').not(':contains(' + valeur + ')').hide();
-	// for (id in dataParse){
-	// 	var personne = dataParse[id];
-	// 	var trouver = $.contains(dataParse, valeur);
-	// 	if (trouver === true) {
-	// 		console.log(personne);
-	// 		$('#tBody').empty();
-	// 		$('#inRecherche').val('');
-	// 		$('#tBody').append('<tr><td>' + personne.nom + '</td><td>' + personne.prenom + '</td><td>' + personne.age + '</td></tr>');
-	// 		return personne;
-	// 	}
-	// }
 };
 
-$('.id').click(function(){
+$('.modif').click(function(){
 	var ligne = $(this).closest("tr");
+	var idTmp = ligne.find(".id").text();
 	var nomTmp= ligne.find(".nom").text();
 	var prenomTmp= ligne.find(".prenom").text();
 	var ageTmp= ligne.find(".age").text();
-	var objetTmp = {
-		nom: nomTmp,
-		prenom: prenomTmp,
-		age: ageTmp
-	};
-	var val = JSON.stringify(objetTmp);
-	window.localStorage.setItem("temp", val);
-	objetTmp = JSON.parse(window.localStorage.getItem("temp"));
-	console.log(objetTmp);
-	ligne.replaceWith('<tr><td><input class="nom" value="'+nomTmp+'"></td><td><input class="prenom" value="'+prenomTmp+'"></td><td><input class="age" value="'+ageTmp+'">'+
+
+	ligne.replaceWith('<tr><td class="id">'+idTmp+'</td><td><input class="nom" value="'+nomTmp+'"></td><td><input class="prenom" value="'+prenomTmp+'"></td><td><input class="age" value="'+ageTmp+'">'+
 		'</td><td><button id="valid" class="btn btn-outline-success my-2 my-sm-0">Valider</button></td>'+
 		'<td><button class="suppr btn btn-outline-success my-2 my-sm-0">Supprimer</button></td></tr>');
+	$('.id').hide();
 	$('#valid').click(function envoyer(){
 		var ligne = $(this).closest("tr");
 		var nomMod= ligne.find(".nom").val();
 		var prenomMod= ligne.find(".prenom").val();
 		var ageMod= ligne.find(".age").val();
 
+		var objetTmp = {
+
+			nom: nomMod,
+			prenom: prenomMod,
+			age: ageMod
+
+		};
+
 		var dataParse = JSON.parse(window.localStorage.getItem("annuaire"));
-		for (id in dataParse){
-			var personne = dataParse[id];
-			var tempo = Object.is(personne, objetTmp);
-				console.log(tempo);
-			if (personne == objetTmp) {
-				alert('ok');
-				delete personne;
-			}
-		}
-		// dataParse.push({
-		// 	nom : nomMod,
-		// 	prenom : prenomMod,
-		// 	age : ageMod
-		// });
-		// var val = JSON.stringify(dataParse);
-		// window.localStorage.setItem("annuaire", val);
-		//location.href="index.html";
+		dataParse[idTmp] = Object.assign(objetTmp);
+		console.log(dataParse[idTmp]);
+		var val = JSON.stringify(dataParse);
+		window.localStorage.setItem("annuaire", val);
+		location.href="index.html";
 	});
 });
 
-
 $('.suppr').click(function(){
-
+	var ligne = $(this).closest("tr");
+	var idTmp = ligne.find(".id").text();
+	var nomTmp= ligne.find(".nom").text();
+	var prenomTmp= ligne.find(".prenom").text();
+	if (confirm("Voulez-vous vraiment supprimer "+nomTmp+ " " + prenomTmp+" ?")) {
+		var dataParse = JSON.parse(window.localStorage.getItem("annuaire"));
+		dataParse.splice(idTmp, 1);
+		var val = JSON.stringify(dataParse);
+		window.localStorage.setItem("annuaire", val);
+		location.href="index.html";
+	}
 });
 
 $('#retour').click(function(){
