@@ -1,23 +1,23 @@
-
+//générer l'annuaire
 var dataParse = JSON.parse(window.localStorage.getItem("annuaire"));
 for (id in dataParse){
 	var personne = dataParse[id];
-	if (personne == null) {
 
-	}else{
 		$('#tBody').append('<tr><td class="id">'+id+'</td><td class="nom">' + personne.nom + '</td><td class="prenom">' + personne.prenom + '</td><td class="age">' + personne.age + 
 			'</td><td><button class="modif btn btn-outline-success my-2 my-sm-0">Modifier</button></td>'+
 			'<td><button class="suppr btn btn-outline-success my-2 my-sm-0">Supprimer</button></td></tr>');
-	}
+	
 }
 $('.id').hide();
+
+//ajouter une personne
 $('#submit').click(function (){
 
 	var nomSet = $('#inNom').val();
 	var prenomSet = $('#inPrenom').val();
 	var ageSet = $('#inAge').val();
 
-	if (nomSet === '' && prenomSet === '') {
+	if (nomSet === '' || prenomSet === '') {
 
 		alert('Nom et prénom obligatoires');
 
@@ -40,6 +40,8 @@ $('#submit').click(function (){
 	}
 });
 
+
+//fonction de recherche
 $('#butRecherche').click(function(){
 	cherche();
 });
@@ -47,12 +49,12 @@ $('#butRecherche').click(function(){
 function cherche(){
 	$('tbody>tr').show();
 	var valeur = $('#inRecherche').val();
-	if (valeur === '') {
-		$('tbody>tr').show();
-	}
 	$('tbody>tr').not(':contains(' + valeur + ')').hide();
 };
 
+
+
+//fonction modifier
 $('.modif').click(function(){
 	var ligne = $(this).closest("tr");
 	var idTmp = ligne.find(".id").text();
@@ -64,6 +66,9 @@ $('.modif').click(function(){
 		'</td><td><button id="valid" class="btn btn-outline-success my-2 my-sm-0">Valider</button></td>'+
 		'<td><button class="suppr btn btn-outline-success my-2 my-sm-0">Supprimer</button></td></tr>');
 	$('.id').hide();
+
+
+	//quand user valide ses modifs
 	$('#valid').click(function envoyer(){
 		var ligne = $(this).closest("tr");
 		var nomMod= ligne.find(".nom").val();
@@ -80,13 +85,14 @@ $('.modif').click(function(){
 
 		var dataParse = JSON.parse(window.localStorage.getItem("annuaire"));
 		dataParse[idTmp] = Object.assign(objetTmp);
-		console.log(dataParse[idTmp]);
+
 		var val = JSON.stringify(dataParse);
 		window.localStorage.setItem("annuaire", val);
 		location.href="index.html";
 	});
 });
 
+//fonction de suppression
 $('.suppr').click(function(){
 	var ligne = $(this).closest("tr");
 	var idTmp = ligne.find(".id").text();
@@ -104,6 +110,7 @@ $('.suppr').click(function(){
 $('#retour').click(function(){
 	location.href="index.html";
 });
+
 $('#refresh').click(function(){
 	location.href="index.html";
 });
